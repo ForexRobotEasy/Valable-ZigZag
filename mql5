@@ -1,0 +1,117 @@
+
+//+------------------------------------------------------------------+
+//|                                                Valable ZigZag.mq5 |
+//|                                Copyright 2023, Forex Robot Easy Team|
+//|                                                     forexroboteasy.com|
+//+------------------------------------------------------------------+
+//|  Terms of Reference for Writing Code for Valable ZigZag Indicator |
+//+------------------------------------------------------------------+
+
+#property copyright 'Copyright 2023, Forex Robot Easy Team'
+#property link      'forexroboteasy.com'
+#property version   '1.00'
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Define the timeframe to H4
+    if (Period() != PERIOD_H4)
+    {
+        Print('Please install the Valable ZigZag indicator on an H4 timeframe chart.');
+        return INIT_FAILED;
+    }
+    
+    // Initialize ZigZag indicator
+    IndicatorSetInteger(INDICATOR_DIGITALFILTER, 1);
+    
+    return INIT_SUCCEEDED;
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Clean up any resources used
+}
+
+//+------------------------------------------------------------------+
+//| Expert start function                                            |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Retrieve the current ZigZag value
+    double zigzagValue = iCustom(_Symbol, PERIOD_H4, 'Valable ZigZag', 0, 0);
+    
+    // Check if the ZigZag value indicates an upward trend
+    if (zigzagValue > 0)
+    {
+        // Perform trend trading based on the upward trend
+        // ... Your trading logic here ...
+    }
+    // Check if the ZigZag value indicates a downward trend
+    else if (zigzagValue < 0)
+    {
+        // Perform trend trading based on the downward trend
+        // ... Your trading logic here ...
+    }
+    // No clear trend indicated by the ZigZag value
+    else
+    {
+        // Wait for a clear trend to be established
+        // ... Your waiting logic here ...
+    }
+    
+    // Check if the trader wants to switch to H1 timeframe
+    if (IsKeyPressed(KEY_F1))
+    {
+        // Change the timeframe to H1
+        ChartSetInteger(0, CHART_PERIOD, PERIOD_H1);
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator 'Valable ZigZag'                                |
+//+------------------------------------------------------------------+
+#property indicator_chart_window
+#property indicator_buffers 1
+#property indicator_plots   1
+#property indicator_type1   DRAW_COLOR_SECTION
+#property indicator_color1  clrBlue
+#property indicator_label1  'Valable ZigZag'
+
+// Define indicator buffers
+double ZigZagBuffer[];
+
+//+------------------------------------------------------------------+
+//| Custom indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set indicator buffers
+    SetIndexBuffer(0, ZigZagBuffer, INDICATOR_DATA);
+    
+    return INIT_SUCCEEDED;
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator calculation function                            |
+//+------------------------------------------------------------------+
+int OnCalculate(const int rates_total,
+                const int prev_calculated,
+                const datetime &time[],
+                const double &open[],
+                const double &high[],
+                const double &low[],
+                const double &close[],
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
+{
+    // Perform calculations to construct the Valable ZigZag indicator
+    // ... Your ZigZag calculation logic here ...
+    
+    return rates_total;
+}
